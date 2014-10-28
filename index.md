@@ -1,135 +1,151 @@
-Yokohama.js (#yjs20140817)
-
-## CSS Spriteを動的生成して快適ソシャゲ開発
+## AngularJSで作ったアプリをReactで置き換えてみた
 
 ---
 
-## 自己紹介
-![](https://avatars2.githubusercontent.com/u/730940?s=200)
-
-宇野 陽太([@cancer6](https://twitter.com/cancer6))
-
-株式会社モバイルファクトリーというところで<br>
-フロントエンドエンジニアやってます
-
-最近はBackbone / Marionette / AngularJS あたりを触ったり<br>
-CSSの設計したりなど
-
----
-
-## 生成の流れ
-- Image Assets Generator(Photoshop) <!-- .element: class="fragment" data-fragment-index="1" -->
-- フォルダに配置 <!-- .element: class="fragment" data-fragment-index="2" -->
-- Compass (grunt-watch) <!-- .element: class="fragment" data-fragment-index="3" -->
-
----
-
-## Image Assets Generator(Photoshop)
-
-- [ファイル] → [生成]にチェックを入れておく <!-- .element: class="fragment" data-fragment-index="1" -->
-- レイヤーにファイル名をつけておく <!-- .element: class="fragment" data-fragment-index="2" -->
-- レイヤーが更新されると指定した名前で自動的に書き出し <!-- .element: class="fragment" data-fragment-index="3" -->
-- ※ Photoshop CC以降 <!-- .element: class="fragment" data-fragment-index="4" -->
-
----
-
-## フォルダに配置
-
-- 職人が丹精込めて一つ一つ移動 <!-- .element: class="fragment" data-fragment-index="1" -->
-
----
-
-## Compass (grunt-watch)
-
-- CSSの生成と一緒にSpriteファイルも生成してくれる <!-- .element: class="fragment" data-fragment-index="1" -->
-- 便利！ <!-- .element: class="fragment" data-fragment-index="2" -->
-
----
-
-## CSS Sprite Helpers for Compass
-
-http://compass-style.org/reference/compass/helpers/sprites/
-
----
-
-## CSS Sprite Helpers(略)のいいところ
-
-- 導入が楽 <!-- .element: class="fragment" data-fragment-index="1" -->
- - Compassが用意しているfunctionを使えばすぐ <!-- .element: class="fragment" data-fragment-index="2" -->
- - Sass(SCSS)ファイルに書いていくだけ <!-- .element: class="fragment" data-fragment-index="3" -->
-
----
-
-## CSS Sprite Helpers(略)のよくないところ
-
-- 謎い <!-- .element: class="fragment" data-fragment-index="1" -->
- - マッピング情報はRuby側で管理 <!-- .element: class="fragment" data-fragment-index="2" -->
- - functionで取得するのでキャッシュしておかないといけない <!-- .element: class="fragment" data-fragment-index="3" -->
+## React
 
 --
 
-## CSS Sprite Helpers(略)のよくないところ
+### React
 
-- 遅い <!-- .element: class="fragment" data-fragment-index="1" -->
- - CSSの生成が遅くなる(画像の変更が無くても+数秒) <!-- .element: class="fragment" data-fragment-index="2" -->
- - Sass(SCSS)に変更があるたびに画像の差分をチェック <!-- .element: class="fragment" data-fragment-index="3" -->
- - (Spriteの生成が遅いわけではないです、たぶん) <!-- .element: class="fragment" data-fragment-index="4" -->
-
---
-
-## CSS Sprite Helpers(略)のよくないところ
-
-- 画像生成後にgrunt-watchが走らない <!-- .element: class="fragment" data-fragment-index="1" -->
- - 画像の最適化とかしてると地味につらい <!-- .element: class="fragment" data-fragment-index="2" -->
-
----
-
-## grunt-spritesmith
-
-https://github.com/Ensighten/grunt-spritesmith
-
----
-
-## grunt-spritesmithのいいところ
-
-- Compass...というかSassに非依存 <!-- .element: class="fragment" data-fragment-index="1" -->
- - LESSでもStylusでも使える <!-- .element: class="fragment" data-fragment-index="2" -->
-- CSSの生成とCSS Spriteの生成を分離できる <!-- .element: class="fragment" data-fragment-index="3" -->
- - CompassはCSSの生成に集中 <!-- .element: class="fragment" data-fragment-index="4" -->
- - CSSの生成が早くなる <!-- .element: class="fragment" data-fragment-index="5" -->
+- XML likeな構文(JSX)でComponentを定義
+ - Componentを組み合わせてViewを構築
+- 子Componentへの値の受け渡しにはPropsを使う
+- ユーザーの操作などで変化する値にはStateを使う
+- Componentの各状態においてLifecycle Methodが定義されてるのでよしなに使う
 
 --
 
-## grunt-spritesmithのいいところ
+### Reactを使うにあたって
 
-- Compassみたいにブラックボックスじゃない <!-- .element: class="fragment" data-fragment-index="1" -->
- - マッピング情報はSass(SCSS)の変数化される <!-- .element: class="fragment" data-fragment-index="2" -->
- - 変数にアクセスするfunctionも一緒に書きだされる <!-- .element: class="fragment" data-fragment-index="3" -->
+1.  Componentを洗い出す
+2.  staticに作ってみる
+3.  Stateを使うべきところを洗い出す
+4.  Stateを置くところを決める
+5.  子から親へデータを戻す
 
----
-
-## grunt-spritesmithのよくないところ
-
-- フォルダが分けられない <!-- .element: class="fragment" data-fragment-index="1" -->
- - 一つのフォルダを監視して一つのSpriteを生成する <!-- .element: class="fragment" data-fragment-index="2" -->
-- CompassのI/Fと差異があるので、途中からの移行がつらい <!-- .element: class="fragment" data-fragment-index="3" -->
- - 規模が大きくなってくると全部差し替えとかやってられない <!-- .element: class="fragment" data-fragment-index="4" -->
+http://facebook.github.io/react/docs/thinking-in-react.html
 
 ---
 
-## もう少し使いやすく...
+## Component
 
-- 複数のフォルダを監視するgruntTaskを作成 <!-- .element: class="fragment" data-fragment-index="1" -->
- - 対象のフォルダ以下にあるフォルダ名でSpriteファイルを生成 <!-- .element: class="fragment" data-fragment-index="2" -->
- - grunt-spritesmithが作るマッピング情報をJSONで保存 <!-- .element: class="fragment" data-fragment-index="3" -->
- - パースしてSass(SCSS)のMapに変換 <!-- .element: class="fragment" data-fragment-index="4" -->
-- 既存のI/Fを再利用 <!-- .element: class="fragment" data-fragment-index="5" -->
+--
+
+### Component
+
+- 実際に組み始める前にComponentの設計をする
+ - 折角なのでBEMで考えてみる
+
+```css
+.members                         ->  <Members />
+.members__list              ->  <MembersList />
+.members__list__row  ->  <MembersListRow />
+.member-edit                  ->  <MemberEdit />
+```
+
+--
+
+### Component
+
+- JSXでXMLのattributeのように書くことでComponentへPropsを渡すことができる
+ - BEMのclassNameをPropsを使って渡してみる
+
+```ruby
+# <Members className="members" />
+
+Members = React.createClass
+  render: ->
+    bemClassName =
+      list: "#{@props.className}__list"
+    <MembersList className={bemClassName.list} />
+```
 
 ---
 
-## 今後やりたいこと
-- Image Assets Generatorとgruntの連携 <!-- .element: class="fragment" data-fragment-index="1" -->
- - 職人のぬくもりを機械で置き換えたい <!-- .element: class="fragment" data-fragment-index="2" -->
+## State
+
+--
+
+### State
+
+- `getInitialState`でstateを初期化
+- `setState`でstateの値を変更
+- `componentDidMount`でAPIリクエストをしてsetStateで更新するといいらしい
+- 子Componentでstateの内容が変更されたら、イベントで親まで戻してあげる
+
+```ruby
+MembersList = React.createClass
+  getInitialState:
+    member: null
+  componentDidMount: ->
+    Api.members.get().done (member) =>
+      @setState member: member
+  handleMemberEdit: (member) ->
+    @setState member: member
+  render: ->
+    <MembersListRow
+      member={@state.member}
+      onMemberEdit={@handleMemberEdit} />
+
+MembersListRow = React.createClass
+  handleSave: ->
+    @props.onMemberEdit(member)
+  render: ->
+    <MemberEdit
+      member={@props.member}
+      onSave={@handleSave} />
+```
+
+--
+
+### State
+
+- 基本的にはStateは多用せずにPropsを使う
+ - 親からpropsで与えられてたら、stateじゃない
+ - 変化するものじゃなかったら、stateじゃない
+ - 他のstateやpropsから処理されるものだったら、stateじゃない
+
+http://facebook.github.io/react/docs/thinking-in-react.html#step-3-identify-the-minimal-but-complete-representation-of-ui-state
+
+---
+
+## AngularJS vs React
+
+--
+
+### DOM Component
+
+- ReactのComponentの方が分割しやすい
+ - 責任範囲を小さくできるのでコードが煩雑化しにくそう
+ - 大きなComponentも作ろうと思えば作れるので設計大事
+- className(Props)の引き回しでBEMが快適になる
+ - `class=""`に頑張って書かなくていいのは嬉しい
+ - やり過ぎると大変なことになりそうなのでほどほどに
+
+--
+
+### State change
+
+- ngScopeが優秀
+ - React.addonsの`Reactlink`を使うとtwo-way bindingできるらしい
+- Componentのネストが深くなるとイベントで戻すのが辛くなる
+- React.addonsの`classSet`を使うとAngular likeにclassNameの切り替えができる
+
+---
+
+## まとめ
+
+--
+
+### まとめ(感想)
+- AngularJSやBackbone(Marionette)と比べるとViewのコンポーネント化がしやすい
+ - BEMを始めCSSの設計手法との相性も良さそうな印象
+- State周りは`Reactlink`を使うのが正解な気がする
+- 他にもngAnimate風にアニメーションの指定ができるMixinがあったり面白そう
+- JSXの取っ付きづらさに慣れると使いやすい
+
+https://github.com/cancer/react-SavageApp
 
 ---
 
