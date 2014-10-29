@@ -147,7 +147,3 @@ http://facebook.github.io/react/docs/thinking-in-react.html#step-3-identify-the-
 
 https://github.com/cancer/react-SavageApp
 
----
-
-### ご清聴ありがとうございました
-
